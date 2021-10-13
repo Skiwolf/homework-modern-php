@@ -3,6 +3,8 @@
 /**
  * AUTHOR:  Richard Bohac [rici.bohac@gmail.com]
  * DATE:    2021-10-13
+ *
+ * TODO: variable comments
  */
 
 //------------------------------------------------------REQUIRES--------------------------------------------------------
@@ -12,7 +14,7 @@ require_once 'IDecorator.php';
 /**
  * Decorator that extract data with use of RegEx and changes the extracted content to lower case.
  */
-final class RegExLowerCaseDecorator {
+final class RegExLowerCaseDecorator implements IDecorator {
     //----------------------------------------------------CONSTANTS-----------------------------------------------------
     //-------------------------------------------------CONSTANTS - END--------------------------------------------------
 
@@ -87,7 +89,9 @@ final class RegExLowerCaseDecorator {
      *
      * @return string       decorated string
      */
-    public function apply(string $line) : string;
+    public function apply(string $line) : string {
+        return strtolower($line);
+    }
     //---------------------------------------------PUBLIC FUNCTIONS - END-----------------------------------------------
 }
 

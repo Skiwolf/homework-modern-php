@@ -22,6 +22,7 @@ abstract class AFileReader {
      * @var string|null
      */
     protected ?string $t_file_path = null;
+    
     /**
      * file handler from fopen
      *

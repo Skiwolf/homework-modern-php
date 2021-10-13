@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * AUTHOR:  Richard Bohac [rici.bohac@gmail.com]
+ * DATE:    2021-10-14
+ */
+
+//------------------------------------------------------REQUIRES--------------------------------------------------------
+require_once 'configs/config.php';
+
+require_once 'src/decorators/RegExLowerCaseDecorator.php';
+require_once 'src/comparators/StringComparator.php';
+require_once 'src/LogController.php';
+//---------------------------------------------------REQUIRES - END-----------------------------------------------------
+
+
+//------------------------------------------------------BODY--------------------------------------------------------
+$file_reader = new TxtFileReader(INPUT_FILE_PATH);
+if (!$file_reader->openHandler()) {
+    echo 'Could not open input file: ' . INPUT_FILE_PATH;
+    exit;
+}
+
+$decorator = new RegExLowerCaseDecorator(DECORATOR_REGEX);
+$log_controller = new LogController($file_reader, $decorator);
+
+foreach (COMPARATOR_STRINGS as $comparator_string) {
+    $log_controller->addComparator(new StringComparator($comparator_string));
+}
+
+$log_controller->run(
+    function() use ($log_controller) {
+        $result = $log_controller->getResultsAsString();
+        echo str_replace(PHP_EOL, '<br>', $result);
+        echo '<br>';
+        echo '<br>';
+    },
+    PRINT_AFTER_LINES
+);
+
+$file_reader->closeHandler();
+//---------------------------------------------------BODY - END-----------------------------------------------------
+
+?>
