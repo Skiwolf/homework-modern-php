@@ -3,6 +3,8 @@
 /**
  * AUTHOR:  Richard Bohac [rici.bohac@gmail.com]
  * DATE:    2021-10-13
+ *
+ * TODO: openHandler - check if any handler is already open, check the existence of a file
  */
 
 //------------------------------------------------------REQUIRES--------------------------------------------------------
