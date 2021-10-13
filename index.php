@@ -36,9 +36,9 @@ try {
 $log_controller->run(
     function() use ($log_controller) {
         $result = $log_controller->getResultsAsString();
-        echo str_replace(PHP_EOL, '<br>', $result);
-        echo '<br>';
-        echo '<br>';
+        echo str_replace(PHP_EOL, OUTPUT_LINES_SEPARATOR, $result);
+        echo OUTPUT_LINES_SEPARATOR;
+        echo OUTPUT_LINES_SEPARATOR;
     },
     PRINT_AFTER_LINES
 );
