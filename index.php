@@ -6,11 +6,11 @@
  */
 
 //------------------------------------------------------REQUIRES--------------------------------------------------------
-require_once 'configs/config.php';
+require_once __DIR__ . '/configs/config.php';
 
-require_once 'src/decorators/RegExLowerCaseDecorator.php';
-require_once 'src/comparators/StringComparator.php';
-require_once 'src/LogController.php';
+require_once ABS_PATH . 'src/decorators/RegExLowerCaseDecorator.php';
+require_once ABS_PATH . 'src/comparators/StringComparator.php';
+require_once ABS_PATH . 'src/LogController.php';
 //---------------------------------------------------REQUIRES - END-----------------------------------------------------
 
 
@@ -24,8 +24,13 @@ if (!$file_reader->openHandler()) {
 $decorator = new RegExLowerCaseDecorator(DECORATOR_REGEX);
 $log_controller = new LogController($file_reader, $decorator);
 
-foreach (COMPARATOR_STRINGS as $comparator_string) {
-    $log_controller->addComparator(new StringComparator($comparator_string));
+try {
+    foreach (COMPARATOR_STRINGS as $comparator_string) {
+        $log_controller->addComparator(new StringComparator($comparator_string));
+    }
+} catch (DataTypeException $e) {
+    echo $e;
+    exit;
 }
 
 $log_controller->run(
@@ -37,6 +42,7 @@ $log_controller->run(
     },
     PRINT_AFTER_LINES
 );
+
 
 $file_reader->closeHandler();
 //---------------------------------------------------BODY - END-----------------------------------------------------

@@ -8,9 +8,9 @@
  */
 
 //------------------------------------------------------REQUIRES--------------------------------------------------------
-require_once 'comparators/AComparator.php';
-require_once 'decorators/IDecorator.php';
-require_once 'file_readers/TxtFileReader.php';
+require_once ABS_PATH . 'src/comparators/AComparator.php';
+require_once ABS_PATH . 'src/decorators/IDecorator.php';
+require_once ABS_PATH . 'src/file_readers/TxtFileReader.php';
 //---------------------------------------------------REQUIRES - END-----------------------------------------------------
 
 /**
