@@ -19,9 +19,6 @@ final class DataTypeException extends Exception {
     //-------------------------------------------------VARIABLES - END--------------------------------------------------
 
     //--------------------------------------------------CONSTRUCTORS----------------------------------------------------
-    public function __construct($message, $code = 1, Exception $previous = null) {
-        parent::__construct($message, $code, $previous);
-    }
     //-----------------------------------------------CONSTRUCTORS - END-------------------------------------------------
 
     //------------------------------------------------PRIVATE FUNCTIONS-------------------------------------------------
@@ -55,7 +52,7 @@ final class DataTypeException extends Exception {
     //--------------------------------------------PROTECTED FUNCTIONS - END---------------------------------------------
 
     //------------------------------------------------PUBLIC FUNCTIONS--------------------------------------------------
-    public function __toString() {
+    public function __toString() : string {
         return __CLASS__ . ': [' . $this->code . ']: ' . $this->message . ' Trace: ' . $this->getReadableTrace();
     }
     //---------------------------------------------PUBLIC FUNCTIONS - END-----------------------------------------------

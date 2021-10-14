@@ -42,7 +42,7 @@ interface IDecorator {
      *
      * @param  string               $line   string to be extracted from
      *
-     * @return array[string]|null           Null if the decorator condition is not met. Array of strings to decorate otherwise.
+     * @return array<string>|null           Null if the decorator condition is not met. Array of strings to decorate otherwise.
      */
     public function extractAll(string $line) : ?array;
 

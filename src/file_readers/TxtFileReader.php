@@ -36,7 +36,7 @@ final class TxtFileReader extends AFileReader {
      * @return  string|null     Null on end, or non-opened handler. The line read in string form.
      */
     public function readLine() : ?string {
-        if ($this->t_handler === null) {
+        if (!$this->isHandlerOpen()) {
             return null;
         }
 

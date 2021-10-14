@@ -21,14 +21,14 @@ abstract class AFileReader {
     /**
      * File path to open.
      *
-     * @var string|null
+     * @var string
      */
-    protected ?string $t_file_path = null;
+    protected string $t_file_path;
 
     /**
      * File handler from fopen
      *
-     * @var mixed
+     * @var resource|null
      */
     protected mixed $t_handler = null;
     //-------------------------------------------------VARIABLES - END--------------------------------------------------
@@ -57,12 +57,12 @@ abstract class AFileReader {
     /**
      * Reads full file. May be problematic for large files.
      *
-     * @return array|null   Array of lines from $this->readLine().
-     *                      Null if handler is not opened.
-     *                      May return empty array for empty file.
+     * @return array<mixed>|null    Array of lines from $this->readLine().
+     *                              Null if handler is not opened.
+     *                              May return empty array for empty file.
      */
     public function readFile() : ?array {
-        if ($this->t_handler === null) {
+        if (!$this->isHandlerOpen()) {
             return null;
         }
 
@@ -77,14 +77,14 @@ abstract class AFileReader {
     /**
      * Reads N lines from file. May be problematic for large files.
      *
-     * @param  int          $lines_number   Number of lines read.
-     * @return array|null                   Array of lines from $this->readLine().
-     *                                      Null if handler is not opened.
-     *                                      May return empty array for empty file.
-     *                                      Number of returned lines may not equal to number of requested lines.
+     * @param  int                  $lines_number   Number of lines read.
+     * @return array<mixed>|null                    Array of lines from $this->readLine().
+     *                                              Null if handler is not opened.
+     *                                              May return empty array for empty file.
+     *                                              Number of returned lines may not equal to number of requested lines.
      */
     public function readNLines(int $lines_number) : ?array {
-        if ($this->t_handler === null) {
+        if (!$this->isHandlerOpen()) {
             return null;
         }
 
@@ -104,22 +104,27 @@ abstract class AFileReader {
     /**
      * Opens file handler. Needs to be done before reading.
      *
-     * @return bool True if handler was opened successfuly. False on error, if the handler is already opened, or the file does not exist.
+     * @param  boolean $check_file_exists   True to check the if the file exists on file system.
+     *                                      Should be disabled only for special cases like standard input or so.
+     *
+     * @return bool                         True if handler was opened successfuly.
+     *                                      False on error, if the handler is already opened, or the file does not exist.
      */
-    public function openHandler() : bool {
+    public function openHandler(bool $check_file_exists = true) : bool {
         if ($this->isHandlerOpen()) {
             return false;
         }
-        if (!file_exists($this->t_file_path)) {
+        if ($check_file_exists && !file_exists($this->t_file_path)) {
             return false;
         }
 
-        $this->t_handler = fopen($this->t_file_path, 'r');
+        $handler = fopen($this->t_file_path, 'r');
 
-        if (!$this->t_handler) {
+        if (!$handler) {
             $this->t_handler = null;
             return false;
         }
+        $this->t_handler = $handler;
 
         return true;
     }
@@ -130,7 +135,7 @@ abstract class AFileReader {
      * @return bool True if handler is not opened, or if closed successfuly. False on error.
      */
     public function closeHandler() : bool {
-        if ($this->t_handler === null) {
+        if (!$this->isHandlerOpen()) {
             return true;
         }
 
@@ -143,7 +148,7 @@ abstract class AFileReader {
      * @return bool success, false when no handler present
      */
     public function rewindHandler() : bool {
-        if ($this->t_handler === null) {
+        if (!$this->isHandlerOpen()) {
             return false;
         }
 

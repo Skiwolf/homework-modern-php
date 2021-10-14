@@ -26,7 +26,7 @@ class LogController {
      * Array of comparators used to filter out the unwanted results.
      * If atleast one comparator returns true the result is filtered out.
      *
-     * @var array[AComparator]
+     * @var array<AComparator>
      */
     private array $m_comparators = [];
 
@@ -47,7 +47,7 @@ class LogController {
     /**
      * Array with extracted results.
      *
-     * @var array[string=>int]
+     * @var array<string, int>
      */
     private array $m_results = [];
     //-------------------------------------------------VARIABLES - END--------------------------------------------------

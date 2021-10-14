@@ -16,7 +16,7 @@ require_once ABS_PATH . 'src/LogController.php';
 
 //------------------------------------------------------BODY--------------------------------------------------------
 $file_reader = new TxtFileReader(INPUT_FILE_PATH);
-if (!$file_reader->openHandler()) {
+if (!$file_reader->openHandler(INPUT_FILE_PATH !== 'php://stdin')) {
     echo 'Could not open input file: ' . INPUT_FILE_PATH;
     exit;
 }
