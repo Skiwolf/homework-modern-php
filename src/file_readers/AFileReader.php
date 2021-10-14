@@ -2,9 +2,7 @@
 
 /**
  * AUTHOR:  Richard Bohac [rici.bohac@gmail.com]
- * DATE:    2021-10-13
- *
- * TODO: openHandler - check if any handler is already open, check the existence of a file
+ * DATE:    2021-10-14
  */
 
 //------------------------------------------------------REQUIRES--------------------------------------------------------
@@ -21,12 +19,14 @@ abstract class AFileReader {
 
     //----------------------------------------------------VARIABLES-----------------------------------------------------
     /**
+     * File path to open.
+     *
      * @var string|null
      */
     protected ?string $t_file_path = null;
-    
+
     /**
-     * file handler from fopen
+     * File handler from fopen
      *
      * @var mixed
      */
@@ -104,9 +104,16 @@ abstract class AFileReader {
     /**
      * Opens file handler. Needs to be done before reading.
      *
-     * @return bool True if handler was opened successfuly. False on error.
+     * @return bool True if handler was opened successfuly. False on error, if the handler is already opened, or the file does not exist.
      */
     public function openHandler() : bool {
+        if ($this->isHandlerOpen()) {
+            return false;
+        }
+        if (!file_exists($this->t_file_path)) {
+            return false;
+        }
+
         $this->t_handler = fopen($this->t_file_path, 'r');
 
         if (!$this->t_handler) {
@@ -141,6 +148,15 @@ abstract class AFileReader {
         }
 
         return rewind($this->t_handler);
+    }
+
+    /**
+     * Check whether the file handler is open.
+     *
+     * @return bool
+     */
+    public function isHandlerOpen() : bool {
+        return $this->t_handler !== null;
     }
     //---------------------------------------------PUBLIC FUNCTIONS - END-----------------------------------------------
 }

@@ -2,9 +2,7 @@
 
 /**
  * AUTHOR:  Richard Bohac [rici.bohac@gmail.com]
- * DATE:    2021-10-13
- *
- * TODO: variable comments
+ * DATE:    2021-10-14
  */
 
 //------------------------------------------------------REQUIRES--------------------------------------------------------
@@ -13,12 +11,18 @@ require_once ABS_PATH . 'src/decorators/IDecorator.php';
 
 /**
  * Decorator that extract data with use of RegEx and changes the extracted content to lower case.
+ * Extracted content is taken from the pattern subpatterns.
  */
 final class RegExLowerCaseDecorator implements IDecorator {
     //----------------------------------------------------CONSTANTS-----------------------------------------------------
     //-------------------------------------------------CONSTANTS - END--------------------------------------------------
 
     //----------------------------------------------------VARIABLES-----------------------------------------------------
+    /**
+     * RegEx pattern with atleast subpattern.
+     *
+     * @var string
+     */
     private string $m_pattern;
     //-------------------------------------------------VARIABLES - END--------------------------------------------------
 
